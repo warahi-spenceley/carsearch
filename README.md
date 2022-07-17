@@ -2,7 +2,11 @@
   - [Project description](#project-description)
 - [Development Environment](#development-environment)
   - [Requirements](#requirements)
-- [Running the Pipelines & Deploying to AWS EBS](#running-the-pipelines--deploying-to-aws-ebs)
+- [Pipeline Environment](#pipeline-environment)
+  - [Requirements](#requirements-1)
+    - [Creating an AWS IAM user](#creating-an-aws-iam-user)
+    - [Setting our AWS GitHub repository secrets](#setting-our-aws-github-repository-secrets)
+    - [Create an application on AWS Elastic Beanstalk](#create-an-application-on-aws-elastic-beanstalk)
   - [Available Scripts](#available-scripts)
     - [`npm start`](#npm-start)
     - [`npm run start:docker`](#npm-run-startdocker)
@@ -26,16 +30,26 @@ To test the app out, run locally and use the names from `searchableCarNames.md` 
 # Development Environment
 ## Requirements
 * Install the tools below:
-  * NodeJS 15+
+  * NodeJS 12+
   * npm 6.14.0+
   * Docker (`https://www.docker.com/get-started/`)
 
 * Accounts needed:
   * AWS account (`https://aws.amazon.com/`)
+      - You will need to provide your card details to sign up, but you will only be using the free tier.
 
 * Run `npm install` to install dependencies
 
-# Running the Pipelines & Deploying to AWS EBS
+# Pipeline Environment
+## Requirements
+### Creating an AWS IAM user
+...
+
+### Setting our AWS GitHub repository secrets
+...
+
+### Create an application on AWS Elastic Beanstalk
+...
 
 ## Available Scripts
 
