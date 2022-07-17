@@ -1,25 +1,20 @@
 name: Deployment From Github To AWS
 
-# Any time commits are pushed to the master branch, the following jobs will run.
-# on:
-on: 
-  push:
-    branches:
-      - master
-jobs:
+# Only trigger, when the build workflow succeeded
+on:
+  workflow_run:
+    workflows: ["CI build"]
+    types:
+      - completed
 
-  # Deploy.
+jobs:
   deploy:
-    # Running on the latest version of Ubuntu.
+    # Run the latest version of Ubuntu.
     runs-on: ubuntu-latest
     steps:
       # Check out the code
       - name: Checkout Latest Repo
         uses: actions/checkout@master
-
-      # Run tests
-      - name: Test project
-        run: npm test
         
       # Package all of the code into a zip file, except the node_modules folder.
       - name: Generate Deployment Package 

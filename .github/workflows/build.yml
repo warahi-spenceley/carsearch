@@ -1,0 +1,30 @@
+name: CI build
+
+# Trigger on push to the master branch
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    # Run the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+
+    steps:
+      # Check out the code
+      - name: Checkout Latest Repo
+      - uses: actions/checkout@v3
+
+      # Use multiple version of node for testing & building
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
