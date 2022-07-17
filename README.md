@@ -1,4 +1,43 @@
-# Carsearch
+- [Introduction](#introduction)
+  - [Project description](#project-description)
+- [Development Environment](#development-environment)
+  - [Requirements](#requirements)
+- [Running the Pipelines & Deploying to AWS EBS](#running-the-pipelines--deploying-to-aws-ebs)
+  - [Available Scripts](#available-scripts)
+    - [`npm start`](#npm-start)
+    - [`npm run start:docker`](#npm-run-startdocker)
+    - [`npm test`](#npm-test)
+    - [`npm run build`](#npm-run-build)
+    - [`npm run eject`](#npm-run-eject)
+
+# Introduction
+
+## Project description
+
+This repository contains the source code for Carsearch, a simple application that retrieves information on automobiles based on a search query.
+
+You can enter the following automobile names and it will return back static information on them.
+
+The purpose of this app was to test my DevOps skills, specifically with the following new technologies:
+  - `AWS`
+  - `Docker`
+  - `GitHub Actions`
+
+To test the app out, please view `searchableCarNames.md` of the following automobile names to query:
+
+# Development Environment
+## Requirements
+* Install the tools below:
+  * NodeJS 15+
+  * npm 6.14.0+
+  * Docker (`https://www.docker.com/get-started/`)
+
+* Accounts needed:
+  * AWS account (`https://aws.amazon.com/`)
+
+* Run `npm install` to install dependencies
+
+# Running the Pipelines & Deploying to AWS EBS
 
 ## Available Scripts
 
