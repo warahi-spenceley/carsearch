@@ -17,7 +17,6 @@ jobs:
 
     steps:
       # Check out the code
-      - name: Checkout Latest Repo
       - uses: actions/checkout@v3
 
       # Use multiple version of node for testing & building
@@ -28,4 +27,3 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
-      
