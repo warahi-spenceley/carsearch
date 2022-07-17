@@ -14,16 +14,14 @@
 
 ## Project description
 
-This repository contains the source code for Carsearch, a simple application that retrieves information on automobiles based on a search query.
-
-You can enter the following automobile names and it will return back static information on them.
+This repository contains the source code for Carsearch, a simple application that retrieves static information on automobiles based on a search query.
 
 The purpose of this app was to test my DevOps skills, specifically with the following new technologies:
   - `AWS`
   - `Docker`
   - `GitHub Actions`
 
-To test the app out, please view `searchableCarNames.md` of the following automobile names to query:
+To test the app out, run locally and use the names from `searchableCarNames.md` to query search:
 
 # Development Environment
 ## Requirements

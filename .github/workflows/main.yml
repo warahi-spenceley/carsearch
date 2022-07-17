@@ -1,7 +1,8 @@
 name: Deployment From Github To AWS
 
 # Any time commits are pushed to the master branch, the following jobs will run.
-on:
+# on:
+on: 
   push:
     branches:
       - master
@@ -15,6 +16,10 @@ jobs:
       # Check out the code
       - name: Checkout Latest Repo
         uses: actions/checkout@master
+
+      # Run tests
+      - name: Test project
+        run: npm test
         
       # Package all of the code into a zip file, except the node_modules folder.
       - name: Generate Deployment Package 
