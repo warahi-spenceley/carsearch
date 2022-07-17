@@ -1,8 +1,16 @@
+# This file is used to facilitate the creation of docker images.
+# You can specify things like volume mounting & exposing different ports.
+# Please see: https://docs.docker.com/storage/volumes/ & https://docs.docker.com/config/containers/container-networking/ for more information.
+
+# Docker version.
 version: '3'
 services:
   deployment-prod:
     build:
+      # Where the target Dockerfile is located.
       context: .
+      # The name of the Dockerfile we are referencing, in this case Production.
       dockerfile: Dockerfile
     ports:
+      # Expose port '80' to port '80', as nginx is running on port '80' by default.
       - '80:80'

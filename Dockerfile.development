@@ -1,10 +1,17 @@
+# Install Node.js on this distribution.
 FROM node:alpine
 
+# Where we will store all of our files in the container.
 WORKDIR '/app'
 
+# Copy the package.json file into the root directory defined above.
 COPY package.json .
+
+# Install the dependencies in the container.
 RUN npm install
 
+# Copy everything from the current working directory into the container.
 COPY . .
 
+# Run the application in the container.
 CMD ["npm", "run", "start"]

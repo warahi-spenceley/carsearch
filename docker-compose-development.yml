@@ -1,11 +1,21 @@
+# Docker version.
 version: '3'
 services:
   deployment:
     build:
+      # Where the target Dockerfile is located.
       context: .
+      # The name of the Dockerfile we are referencing, in this case Development.
       dockerfile: Dockerfile.development
     ports:
+      # Declaring port '4500' on our local machine gets mapped to port '3000' on the container.
       - '4500:3000'
     volumes:
+      # Map everything from the current directory into the working directory in the container.
+      # This is so when we make changes to our app, we can see live updates in the container.
       - .:/app
+      # Ensure nothing is mapped from your local harddrive to node_modules.
       - /app/node_modules
+
+
+  
