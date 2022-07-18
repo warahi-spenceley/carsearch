@@ -13,7 +13,7 @@ export interface car {
 }
 
 interface queryOptions {
-  isLooseQuery: boolean;
+  filter?: string;
 }
 
 /**
@@ -21,20 +21,24 @@ interface queryOptions {
  * Mock REST API to query the car objects from './cars.json'.
  * @param carNameQuery The name of the car(s) being queried.
  * @param options The query options, optional.
- * @param options.isLooseQuery If true, the query will return all cars with the query included in their name. If false, it will only return exact matches. Default is false.
+ * @param options.[filter] If this value equals 'looseMatch', the query will return all cars with the query included in their name. If value is 'exactMatch' or not provided, it will only return exact matches. Default is 'exactMatch'.
  * @returns An array of matching car object(s) or an empty array.
  */
-export const find = (carNameQuery: string, options: queryOptions|null = {
-  isLooseQuery: false,
+export const find = (carNameQuery: string, options: queryOptions = {
+  filter: "exactMatch",
 }) => {
   if (!carNameQuery) return;
 
   const carsFound: Array<car|null> = [];
 
-  carsData.map((car: any) => {
-    if (options?.isLooseQuery && car.Name.includes(carNameQuery)) carsFound.push(car);
-    else if (carNameQuery === car.Name) carsFound.push(car);
-  });
+  try {
+    carsData.map((car: any) => {
+      if (options.filter === 'looseMatch' && car.Name.includes(carNameQuery)) carsFound.push(car);
+      else if (carNameQuery === car.Name) carsFound.push(car);
+    });
+  } catch (error) {
+    console.error("Failed to query cars. Reason: ", error);
+  }
 
   return carsFound;
 }

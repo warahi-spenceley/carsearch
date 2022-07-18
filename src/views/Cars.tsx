@@ -13,19 +13,17 @@ import {
 import Searchbar from '../components/Searchbar';
 
 import * as CarsApi from '../api/Cars';
-/** Car interfaces for type checking */
-import { car } from '../api/Cars';
+
+/** interfaces for type checking */
+import { car as carInterface } from '../api/Cars';
+import { queryProperties as queryPropertiesInterface } from '../components/Searchbar';
 
 export default function Cars() {
   const [carsFound, setCarsFound] = React.useState([]);
 
-  React.useEffect(function setCarsFound() {
-    console.log(carsFound);
-  }, [carsFound]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const queryCars = (query: string) => {
-    if (!query) return;
-    const carsFound: any = CarsApi.find(query);
+  const findCars = (queryProperties: queryPropertiesInterface) => {
+    if (!queryProperties.query) return;
+    const carsFound: any = CarsApi.find(queryProperties.query, { filter: queryProperties.filter });
     setCarsFound(carsFound);
   }
 
@@ -51,7 +49,17 @@ export default function Cars() {
             <Searchbar
               label = "Cars"
               placeholder = "Enter a car name"
-              handleQuery={(input: string) => queryCars(input)}
+              handleQuery={(queryProperties: any) => findCars(queryProperties)}
+              filters={[
+                {
+                  title: 'Loose match',
+                  value: 'looseMatch'
+                },
+                {
+                  title: 'Exact match',
+                  value: 'exactMatch'
+                }
+              ]}
             />
             </Grid>
           </Grid>
@@ -66,14 +74,14 @@ export default function Cars() {
           >
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
               {
-                carsFound.map((car:any) => (
+                carsFound.map((car:carInterface|null) => (
                   <>
                     <ListItem alignItems="flex-start">
                       <ListItemAvatar>
                         <Avatar alt="Car Cartoon" src="/images/car_cartoon.png" />
                       </ListItemAvatar>
                       <ListItemText
-                        primary={car.Name}
+                        primary={ <Typography style={{ fontWeight: 800, paddingBottom: 10 }} variant="h6">{car?.Name}</Typography>}
                         secondary={
                           <Grid
                             container
@@ -83,97 +91,96 @@ export default function Cars() {
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
-                                component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Year: 
                               </Typography>
-                              {' ' + car.Year}
+                              {' ' + car?.Year}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Origin:
                               </Typography>
-                              {' ' + car.Origin}
+                              {' ' + car?.Origin}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Miles_per_Gallon:
                               </Typography>
-                              {' ' + car.Miles_per_Gallon}
+                              {' ' + car?.Miles_per_Gallon}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Cylinders:
                               </Typography>
-                              {' ' + car.Cylinders}
+                              {' ' + car?.Cylinders}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Displacement:
                               </Typography>
-                              {' ' + car.Displacement}
+                              {' ' + car?.Displacement}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Horsepower:
                               </Typography>
-                              {' ' + car.Horsepower}
+                              {' ' + car?.Horsepower}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Weight:
                               </Typography>
-                              {' ' + car.Weight_in_lbs + 'lbs'}
+                              {' ' + car?.Weight_in_lbs + 'lbs'}
                             </Grid>
 
                             <Grid item xs={1}>
                               <Typography
                                 sx={{ display: 'inline' }}
                                 component="span"
-                                variant="body2"
+                                variant="overline"
                                 color="text.primary"
                               >
                                 Acceleration:
                               </Typography>
-                              {' ' + car.Acceleration}
+                              {' ' + car?.Acceleration}
                             </Grid>
                           </Grid>
                         }

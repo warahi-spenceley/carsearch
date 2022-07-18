@@ -1,7 +1,7 @@
 import * as CarsApi from './Cars';
 
 /** Car interfaces for type checking */
-import { car } from './Cars';
+import { car as carInterface } from './Cars';
 
 /**
  * @TODO Write unit test for functions: makeHttpRequest & throwHttpError when implemented in Cars.ts.
@@ -88,7 +88,7 @@ describe('test find', () => {
     ]
 
     /** Call testable function */
-    const response = CarsApi.find(query, { isLooseQuery: true });
+    const response = CarsApi.find(query, { filter: 'looseMatch' });
 
     /** Assertions */
     expect(response).toStrictEqual(expectedResult);
@@ -147,7 +147,7 @@ describe('test find', () => {
     /** Set-up */
     const query = "This query does not match any car names";
     /** Note this data is dependant on the static data defined in ./cars.json */
-    const expectedResult: Array<car|undefined> = []
+    const expectedResult: Array<carInterface|undefined> = []
 
     /** Call testable function */
     const response = CarsApi.find(query);
@@ -161,10 +161,10 @@ describe('test find', () => {
     /** Set-up */
     const query = "This query does not match any car names";
     /** Note this data is dependant on the static data defined in ./cars.json */
-    const expectedResult: Array<car|undefined> = []
+    const expectedResult: Array<carInterface|undefined> = []
 
     /** Call testable function */
-    const response = CarsApi.find(query, { isLooseQuery: true });
+    const response = CarsApi.find(query, { filter: 'looseMatch' });
 
     /** Assertions */
     expect(response).toStrictEqual(expectedResult);
