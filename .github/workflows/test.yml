@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  build:
+  test:
     # Run the latest version of Ubuntu.
     runs-on: ubuntu-latest
 
