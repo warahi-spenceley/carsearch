@@ -131,7 +131,7 @@ describe('test find', () => {
         Weight_in_lbs: 4668,
         Acceleration: 11.5,
         Year: '1975-01-01',
-        Origin: 'USA'
+        Origin: 'US'
       }
     ]
 
