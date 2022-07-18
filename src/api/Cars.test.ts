@@ -1,6 +1,6 @@
 import * as CarsApi from './Cars';
 
-/** Car interface for type checking */
+/** Car interfaces for type checking */
 import { car } from './Cars';
 
 /**
@@ -88,7 +88,7 @@ describe('test find', () => {
     ]
 
     /** Call testable function */
-    const response = CarsApi.find(query, true);
+    const response = CarsApi.find(query, { isLooseQuery: true });
 
     /** Assertions */
     expect(response).toStrictEqual(expectedResult);
@@ -164,7 +164,7 @@ describe('test find', () => {
     const expectedResult: Array<car|undefined> = []
 
     /** Call testable function */
-    const response = CarsApi.find(query, true);
+    const response = CarsApi.find(query, { isLooseQuery: true });
 
     /** Assertions */
     expect(response).toStrictEqual(expectedResult);
