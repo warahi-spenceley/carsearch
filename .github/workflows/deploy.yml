@@ -2,7 +2,7 @@ name: Deployment From Github To AWS
 
 # Only trigger, when the build workflow succeeded
 on:
-  workflow_run:
+  workflow_dispatch:
     workflows: ["CI test"]
     types:
       - completed
