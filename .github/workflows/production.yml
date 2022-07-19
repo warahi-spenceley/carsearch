@@ -3,7 +3,6 @@
 
 name: Test and deploy to AWS Elastic Beanstalk (production environment) 
 
-# Only trigger on merge to master branch
 on:
   push:
     branches:

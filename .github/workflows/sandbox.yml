@@ -1,12 +1,11 @@
-# The aim of this envrionment is to so after we have implemented features for bug fixes for example,
-# Other developers can run manual test cases in a remote setting.
+# The sandbox environment for other developers to test run test cases of the new implementation(s) before merging with 'develop'.
 name: Test and deploy to AWS Elastic Beanstalk (sandbox environment) 
 
-# Only trigger, when the build workflow succeeded
 on:
   push:
     branches:
-      - develop
+      - feature/*
+      - bugfix/*
 
 jobs:
 
