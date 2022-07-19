@@ -28,7 +28,7 @@ jobs:
           replace-with: '-'
           flags: 'g'
 
-      - name: Deploy package with the Docker files to AWS Elastic Beanstalk
+      - name: Deploy package with the Docker files to AWS Elastic Beanstalk production environment
         uses: einaregilsson/beanstalk-deploy@v14
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
