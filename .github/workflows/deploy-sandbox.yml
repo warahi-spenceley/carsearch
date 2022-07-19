@@ -1,30 +1,16 @@
-# The sandbox environment for other developers to test run test cases of the new implementation(s) before merging with 'develop'.
-name: Test and deploy to AWS Elastic Beanstalk (sandbox environment) 
+# The sandbox environment is for other developers to test run test cases of the new implementation before merging with 'develop'.
+name: Deploy to Sandbox environment 
 
 on:
   push:
     branches:
       - feature/*
       - bugfix/*
+    workflows: ["test"]
+      types:
+        - completed
 
 jobs:
-
-  test:
-    # Run the latest version of Ubuntu.
-    runs-on: ubuntu-latest
-
-    steps:
-      # Check out to the code.
-      - uses: actions/checkout@v3
-      # Use the same Node version we are using on AWS to serve our Docker image.
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 12.x
-      # install dependencies
-      - run: npm ci
-      # Run unit tests
-      - run: npm test
 
   deploy:
     # Run the latest version of Ubuntu.
