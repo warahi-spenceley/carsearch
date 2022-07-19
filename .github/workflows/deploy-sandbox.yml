@@ -6,7 +6,11 @@ name: Deployment to AWS EBS Sandbox environment
 # feature/*
 # bugfix/*
 on:
-  workflow_dispatch --ref develop feature/* bugfix/*:
+  workflow_dispatch:
+    branches:
+      - 'develop'
+      - 'feature/*'
+      - 'bugfix/*'
     workflows: ["test"]
       types:
         - completed
