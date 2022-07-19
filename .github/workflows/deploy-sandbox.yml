@@ -6,6 +6,7 @@ on:
     branches:
       - feature/*
       - bugfix/*
+  workflow_run:
     workflows: ["test"]
       types:
         - completed
