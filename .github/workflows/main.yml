@@ -1,0 +1,33 @@
+name: Main
+
+# Test then deploy to sandbox
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    uses: warahi-spenceley/carsearch/.github/workflows/test.yml@develop
+
+  deploy:
+    uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@develop
+    with:
+      environment_name: sandbox
+
+# Test then deploy to production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    uses: warahi-spenceley/carsearch/.github/workflows/test.yml@master
+
+  deploy:
+    uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@master
+    with:
+      environment_name: production

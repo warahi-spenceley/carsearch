@@ -1,30 +1,25 @@
-# name: test
+name: Test
 
-# # Trigger test run on pushes to github from all branches.
-# on: 
-#   push:
-#   pull_request:
-#     branches: 
-#       - develop
-#       - master
-#     types: [closed]
+# Call this reusable workflow when you wish to use it.
+on:
+  workflow_call:
 
-# jobs:
-#   test:
-#     # Run the latest version of Ubuntu.
-#     runs-on: ubuntu-latest
+jobs:
+  test:
+    # Run the latest version of Ubuntu.
+    runs-on: ubuntu-latest
 
-#     steps:
-#       # Check out the code.
-#       - uses: actions/checkout@v3
+    steps:
+      # Check out the code.
+      - uses: actions/checkout@v3
 
-#       # Use the same Node version we are using on our AWS EBS environments to serve our Docker image.
-#       - name: Use Node.js 12.x
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 12.x
+      # Use the same Node version we are using on our AWS EBS environments to serve our Docker image.
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
 
-#       # Install dependencies (clean install)
-#       - run: npm ci
-#       # Run unit tests
-#       - run: npm test
+      # Install dependencies (clean install)
+      - run: npm ci
+      # Run unit tests
+      - run: npm test
