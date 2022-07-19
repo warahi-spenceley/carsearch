@@ -30,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env var (development)
-        if: endsWith(github.ref, '/development')
+        if: github.ref == 'refs/heads/development'
           env:
             ENVIRONMENT: development
 
       - name: Set env var (production)
-        if: endsWith(github.ref, '/production')
+        if: github.ref == 'refs/heads/production'
           env:
             ENVIRONMENT: production
 
