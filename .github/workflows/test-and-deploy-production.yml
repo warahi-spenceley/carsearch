@@ -1,4 +1,4 @@
-name: Deploy to production
+name: Test and deploy to production environment on AWS Elastic Beanstalk 
 
 # On a pull request completed for base branch master which is our production code.
 on:
@@ -7,12 +7,29 @@ on:
       - master
     types:
       - closed
-  workflow_run:
-    workflows: ["test"]
-      types:
-        - completed
 
 jobs:
+
+  test:
+    # Run the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+    steps:
+
+      # Check out to the code.
+      - uses: actions/checkout@v3
+
+      # Use the same Node version we are using on AWS to serve our Docker image.
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+
+      # install dependencies
+      - run: npm ci
+
+      # Run unit tests
+      - run: npm test
+      
   if_merged:
     # If head branch for the pull request starts with 'release/' and the pull request was merged.
     if: ${{ (startsWith(github.head_ref, 'release/')) && (github.event.pull_request.merged == true) }}
