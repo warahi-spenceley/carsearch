@@ -1,0 +1,34 @@
+name: test
+
+on:
+  push:
+    branches:
+      # Trigger when pushed from a branch with one of these as a prefix.
+      - feature/*
+      - bugfix/*
+
+  pull_request:
+    branches:
+      # Also Trigger when a pull request is made to master, which is our production code. 
+      - master
+
+jobs:
+  test:
+    # Run the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+    steps:
+
+      # Check out to the code.
+      - uses: actions/checkout@v3
+
+      # Use the same Node version we are using on AWS to serve our Docker image.
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+
+      # install dependencies
+      - run: npm ci
+
+      # Run unit tests
+      - run: npm test
