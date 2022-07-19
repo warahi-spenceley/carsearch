@@ -1,12 +1,6 @@
 name: Sandbox deployment
 
 on:
-  push:
-    branches:
-      - feature/*
-      - bugfix/*
-
-on:
   workflow_run:
     branches:
     - feature/*
