@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - development
-      - production
+      - master
 
 jobs:
   test:
@@ -26,20 +26,15 @@ jobs:
       # Run unit tests
       - run: npm test
 
-  set_environment_variables:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set env var (development)
-        if: github.ref == 'refs/heads/development'
-          env:
-            ENVIRONMENT: development
-
-      - name: Set env var (production)
-        if: github.ref == 'refs/heads/production'
-          env:
-            ENVIRONMENT: production
-
+  # Deploy to a sandbox environment (development)
   deploy:
-    uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@${{env.ENVIRONMENT}}
-    with:
-      environment_name: ${{env.ENVIRONMENT}}     
+    if: github.ref == 'refs/heads/development'
+      uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@$development
+        with:
+          environment_name: development
+
+    # Deploy to production
+    if: github.ref == 'refs/heads/master'
+      uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@$master
+        with:
+          environment_name: carsearch 
