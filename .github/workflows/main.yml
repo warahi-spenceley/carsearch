@@ -26,9 +26,8 @@ jobs:
       # Run unit tests
       - run: npm test
 
-  deploy:
-
-    # Deploy to a sandbox environment (development) if merged to development branch.
+  # Deploy to a sandbox environment (development) if merged to development branch.
+  deploy_to_sandbox:
     if: github.ref == 'refs/heads/development'
 
     runs-on: ubuntu-latest
@@ -67,7 +66,8 @@ jobs:
           region: ap-southeast-2
           deployment_package: deploy.zip
 
-    # Deploy to a production environment if merged to master branch.
+  # Deploy to a production environment if merged to master branch.
+  deploy_to_production:
     if: github.ref == 'refs/heads/development'
 
     runs-on: ubuntu-latest
