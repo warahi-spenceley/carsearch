@@ -1,10 +1,8 @@
-name: CI test
+name: test
 
-# Trigger on push to the master branch
+# Trigger test run on pushes to github from all branches.
 on: 
   push:
-    branches:
-      - master
 
 jobs:
   test:
@@ -15,12 +13,13 @@ jobs:
       # Check out the code.
       - uses: actions/checkout@v3
 
-      # Use the same Node version we are using on AWS EBS to serve our Docker image.
+      # Use the same Node version we are using on our AWS EBS environments to serve our Docker image.
       - name: Use Node.js 12.x
         uses: actions/setup-node@v3
         with:
           node-version: 12.x
-      # Cleanly install dependencies
+
+      # Install dependencies (clean install)
       - run: npm ci
       # Run unit tests
       - run: npm test

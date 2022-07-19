@@ -1,18 +1,21 @@
-name: Deployment From Github To AWS
+name: Deployment to AWS EBS Production environment
 
-# Only trigger, when the build workflow succeeded
-on:
-  workflow_run:
-    workflows: ["CI test"]
-    types:
-      - completed
+# Allow manual deployment trigger to AWS EBS Sandbox environment available on GitHub if test workflow passes.
+# Also, the deployment trigger will only be available if a pull request is created and approved from branch with 'release/' prefix to master.
+on: 
+  pull_request:
+    branches:
+      - release/*
+      workflows: ["test"]
+        types:
+          - completed
 
 jobs:
   deploy:
-    # Run the latest version of Ubuntu.
+    # Specify the operating system to run on
     runs-on: ubuntu-latest
     steps:
-      # Check out the code
+      # Check out to the code
       - name: Checkout Latest Repo
         uses: actions/checkout@master
         
@@ -20,7 +23,7 @@ jobs:
       - name: Generate Deployment Package 
         run: zip -r deploy.zip * -x "**node_modules**"
 
-      # Retrieve a formatted current timestamp, to use as the version label.
+      # Generate a formated current timestamp to use as the version label in this case.
       - name: Get timestamp
         uses: gerred/actions/current-time@master
         id: current-time
@@ -41,7 +44,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: carsearch
-          environment_name: Carsearch-env
-          version_label: "the-carsearch-deployment-${{ steps.format-time.outputs.replaced }}"
+          environment_name: carsearch-${{ secrets.ENVIRONMENT_NAME }}
+          version_label: "carsearch-deployment-${{ steps.format-time.outputs.replaced }}"
           region: ap-southeast-2
           deployment_package: deploy.zip
