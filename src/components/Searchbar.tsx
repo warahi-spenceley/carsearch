@@ -50,7 +50,7 @@ export default function Searchbar(options: {
 
   React.useEffect(function handleQueryWithFilter() {
     if (queryProperties.hasFilterBeenSelected) options.handleQuery(queryProperties);
-  }, [queryProperties.hasFilterBeenSelected]);
+  }, [queryProperties.hasFilterBeenSelected]); // eslint-disable-line react-hooks/exhaustive-deps
   
   return (
     <>
@@ -88,7 +88,7 @@ export default function Searchbar(options: {
         spacing={1}
         direction="row"
         >
-        <Grid item xs={10}>
+        <Grid item xs={11}>
           <TextField
             fullWidth
             id = "search-bar"
@@ -98,7 +98,7 @@ export default function Searchbar(options: {
             />
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <IconButton
             size="large"
             onClick={

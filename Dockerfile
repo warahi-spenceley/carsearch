@@ -1,4 +1,4 @@
-# The following is what we a call a Docker image.
+# This file is considered is a Docker image.
 # A Docker image is a set of instructions for how we want to run our application in a container.
 # To find out more on what a container is, please visit: https://www.docker.com/resources/what-container/.
 

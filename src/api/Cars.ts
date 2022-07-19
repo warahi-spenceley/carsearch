@@ -1,4 +1,5 @@
 import carsData from './cars.json';
+import * as _ from 'lodash';
 
 export interface car {
   Name: string;
@@ -29,12 +30,14 @@ export const find = (carNameQuery: string, options: queryOptions = {
 }) => {
   if (!carNameQuery) return;
 
+  const formattedQuery = _.toLower(carNameQuery);
   const carsFound: Array<car|null> = [];
 
   try {
     carsData.map((car: any) => {
-      if (options.filter === 'looseMatch' && car.Name.includes(carNameQuery)) carsFound.push(car);
-      else if (carNameQuery === car.Name) carsFound.push(car);
+      if (options.filter === 'looseMatch' && car.Name.includes(formattedQuery)) carsFound.push(car);
+      else if (formattedQuery === car.Name) carsFound.push(car);
+      return null;
     });
   } catch (error) {
     console.error("Failed to query cars. Reason: ", error);
@@ -44,7 +47,7 @@ export const find = (carNameQuery: string, options: queryOptions = {
 }
 
 /**
- * @TODO For fun and learning:
+ * @TODO For fun and learning more with AWS:
  * Move these functions into their own API repository called carsearch-api.
  * Using GitHub Actions, configure the pipelines to test & deploy to AWS Lambda with multiple environments.
  * Then call these serverless Lambda functions via HTTP request, using the functions below:

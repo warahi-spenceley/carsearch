@@ -35,7 +35,7 @@ jobs:
           flags: 'g'
 
       # Push the zip file which contains the docker-compose file over to AWS Elastic Beanstalk.
-      - name: Deploy to EB
+      - name: Deploy to AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v14
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
