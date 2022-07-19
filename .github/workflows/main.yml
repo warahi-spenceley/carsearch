@@ -1,33 +1,41 @@
 name: Main
 
-# Test then deploy to sandbox
-
 on:
   push:
     branches:
-      - develop
-
-jobs:
-  test:
-    uses: warahi-spenceley/carsearch/.github/workflows/test.yml@develop
-
-  deploy:
-    uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@develop
-    with:
-      environment_name: sandbox
-
-# Test then deploy to production
-
-on:
-  push:
-    branches:
+      - development
       - master
 
 jobs:
   test:
-    uses: warahi-spenceley/carsearch/.github/workflows/test.yml@master
+    # Run the latest version of Ubuntu.
+    runs-on: ubuntu-latest
 
-  deploy:
-    uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@master
-    with:
-      environment_name: production
+    steps:
+      # Check out the code.
+      - uses: actions/checkout@v3
+
+      # Use the same Node version we are using on our AWS EBS environments to serve our Docker image.
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+
+      # Install dependencies (clean install)
+      - run: npm ci
+      # Run unit tests
+      - run: npm test
+  
+  # If pushing to the development branch, deploy to development environment
+  if: endsWith(github.ref, '/development')
+    deploy_to_production:
+      uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@development
+      with:
+        environment_name: development
+  
+  # Else if pushing to the production branch, deploy to production environment
+  if: endsWith(github.ref, '/master')
+    deploy_to_production:
+      uses: warahi-spenceley/carsearch/.github/workflows/deploy.yml@master
+      with:
+        environment_name: production          

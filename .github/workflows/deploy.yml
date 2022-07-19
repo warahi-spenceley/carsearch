@@ -1,10 +1,10 @@
-name: Deploy image to AWS Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk
 
 # Call this reusable workflow when you wish to use it.
 on:
   workflow_call:
     inputs:
-      # The environment to deploy to: Sandbox, production etc.
+      # The environment to deploy to: development, production etc.
       environment_name:
         required: true
         type: string
