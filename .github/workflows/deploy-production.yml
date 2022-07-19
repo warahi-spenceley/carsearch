@@ -9,7 +9,6 @@ on:
 jobs:
   deploy:
     run_if:
-      # Only run deployment if a branch with the prefix 'release/*' has been merged into master after a pull request had been approved.
       if: ${{ (github.event.pull_request.merged) && (startsWith(github.head_ref, 'release/*')) }}
         # Specify the operating system to run on
         runs-on: ubuntu-latest

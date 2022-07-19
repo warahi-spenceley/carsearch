@@ -10,7 +10,6 @@ on:
 jobs:
   deploy:
     run_if:
-      # Only run deployment if pull request to develop has been approved and merged.
       if: ${{ github.event.pull_request.merged }}
         # Specify the operating system to run on
         runs-on: ubuntu-latest
