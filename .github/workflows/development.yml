@@ -1,13 +1,32 @@
-name: Deployment From Github To AWS
+# The aim of this envrionment is to so after we have implemented features for bug fixes for example,
+# Other developers can run manual test cases in a remote setting.
+name: Test and deploy to AWS Elastic Beanstalk (sandbox environment) 
 
 # Only trigger, when the build workflow succeeded
 on:
-  workflow_run:
-    workflows: ["CI test"]
-    types:
-      - completed
+  push:
+    branches:
+      - develop
 
 jobs:
+
+  test:
+    # Run the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out to the code.
+      - uses: actions/checkout@v3
+      # Use the same Node version we are using on AWS to serve our Docker image.
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+      # install dependencies
+      - run: npm ci
+      # Run unit tests
+      - run: npm test
+
   deploy:
     # Run the latest version of Ubuntu.
     runs-on: ubuntu-latest
@@ -35,13 +54,13 @@ jobs:
           flags: 'g'
 
       # Push the zip file which contains the docker-compose file over to AWS Elastic Beanstalk.
-      - name: Deploy to AWS Elastic Beanstalk
+      - name: Deploy to sandbox environment on AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v14
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: carsearch
-          environment_name: Carsearch-env
+          environment_name: carsearch-sandbox
           version_label: "the-carsearch-deployment-${{ steps.format-time.outputs.replaced }}"
           region: ap-southeast-2
           deployment_package: deploy.zip
