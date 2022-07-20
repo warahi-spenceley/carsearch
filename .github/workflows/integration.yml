@@ -1,0 +1,76 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - feature/*
+      - bugfix/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run build
+
+  run_unit_tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run test
+
+  deploy_to_sandbox:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@master
+          
+        - name: Generate deployment package 
+          run: zip -r deploy.zip * -x "**node_modules**"
+
+        - name: Get current timestamp for versioning
+          uses: gerred/actions/current-time@master
+          id: current-time
+
+        - name: Format timestamp for versioning
+          uses: frabert/replace-string-action@master
+          id: format-time
+          with:
+            pattern: '[:\.]+'
+            string: "${{ steps.current-time.outputs.time }}"
+            replace-with: '-'
+            flags: 'g'
+
+        - name: Deploy package with the Docker files to AWS Elastic Beanstalk sandbox envrionment
+          uses: einaregilsson/beanstalk-deploy@v14
+          with:
+            aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            application_name: carsearch
+            environment_name: carsearch-sandbox
+            version_label: "carsearch-deployment-${{ steps.format-time.outputs.replaced }}"
+            region: ap-southeast-2
+            deployment_package: deploy.zip
